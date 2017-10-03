@@ -4,11 +4,20 @@
 @{
 }
 
+@model IEnumerable<ToDoList.Models.Task>
+
 <html>
 <head>
     <title>To Do List</title>
 </head>
 <body>
-    <h2>Welcome to the To Do List!</h2>
+    <h2>To Do List</h2>
+    <h4>@Html.DisplayNameFor(model => model.Description)</h4>
+    <ul>
+        @foreach(var listItem in Model)
+        {
+            <li>@Html.DisplayFor(modelItem => listItem.Description)</li>
+        }
+    </ul>
 </body>
 </html>
