@@ -16,7 +16,7 @@ namespace ToDoList.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(db.Items.Include(items=>items.Category).ToList());
+            return View(db.Items.ToList());
         }
     }
 }

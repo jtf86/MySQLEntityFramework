@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ToDoList
 {
-    public class Startup
-    {
+	public class Startup
+	{
 		public IConfigurationRoot Configuration { get; set; }
 		public Startup(IHostingEnvironment env)
 		{
@@ -19,38 +19,38 @@ namespace ToDoList
 				.AddJsonFile("appsettings.json");
 			Configuration = builder.Build();
 		}
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMvc();
-            services.AddEntityFrameworkMySql()
-                    .AddDbContext<ToDoListContext>(options =>
-                                              options
-                                                   .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
-        }
+		// This method gets called by the runtime. Use this method to add services to the container.
+		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+		public void ConfigureServices(IServiceCollection services)
+		{
+			services.AddMvc();
+			services.AddEntityFrameworkMySql()
+					.AddDbContext<ToDoListContext>(options =>
+											  options
+												   .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+		}
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
+		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+		{
 			app.UseMvc(routes =>
 			{
 				routes.MapRoute(
 					name: "default",
 					template: "{controller=Home}/{action=Index}/{id?}");
 			});
+            app.UseStaticFiles();
+			loggerFactory.AddConsole();
 
-            loggerFactory.AddConsole();
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
 
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
-        }
-    }
+			app.Run(async (context) =>
+			{
+				await context.Response.WriteAsync("Hello World!");
+			});
+		}
+	}
 }

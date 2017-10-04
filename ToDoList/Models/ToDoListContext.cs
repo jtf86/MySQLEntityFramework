@@ -6,10 +6,8 @@ namespace ToDoList.Models
     {
         public DbSet<Item> Items { get; set; }
 
-        public DbSet<Category> Categories { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder
                 .UseMySql(@"Server=localhost;database=todolist;uid=root;pwd=root;");
-}
+    }
 }
