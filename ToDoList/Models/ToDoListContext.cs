@@ -4,7 +4,7 @@ namespace ToDoList.Models
 {
     public class ToDoListContext : DbContext
     {
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Item> Items { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
