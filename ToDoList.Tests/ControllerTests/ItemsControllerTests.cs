@@ -32,5 +32,22 @@ namespace ToDoList.Tests.ControllerTests
             //Assert
             Assert.IsInstanceOfType(result, typeof(List<Item>));
         }
-    }
+
+            [TestMethod]
+            public void Post_MethodAddsItem_Test()
+            {
+                // Arrange
+                ItemsController controller = new ItemsController();
+                Item testItem = new Item();
+                testItem.Description = "test item";
+
+                // Act
+                controller.Create(testItem);
+                ViewResult indexView = new ItemsController().Index() as ViewResult;
+                var collection = indexView.ViewData.Model as List<Item>;
+
+                // Assert
+                CollectionAssert.Contains(collection, testItem);
+            }
+        }
 }
