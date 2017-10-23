@@ -8,6 +8,7 @@ namespace ToDoList.Models
 	{
 		[Key]
 		public int ItemId { get; set; }
+        public string Color { get; set; }
 		public string Description { get; set; }
 
         public override bool Equals(System.Object otherItem)

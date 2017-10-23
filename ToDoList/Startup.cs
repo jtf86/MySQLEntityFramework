@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using ToDoList.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ToDoList
 {
@@ -28,24 +29,28 @@ namespace ToDoList
 					.AddDbContext<ToDoListContext>(options =>
 											  options
 												   .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
-		}
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ToDoListContext>()
+                    .AddDefaultTokenProviders();
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
 		{
-			app.UseMvc(routes =>
-			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
-			});
-            app.UseStaticFiles();
-			loggerFactory.AddConsole();
-
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
 			}
+            app.UseIdentity();
+            app.UseMvc(routes =>
+			{
+				routes.MapRoute(
+					name: "default",
+					template: "{controller=Account}/{action=Index}/{id?}");
+			});
+            app.UseStaticFiles();
+			loggerFactory.AddConsole();
+
 
 			app.Run(async (context) =>
 			{
