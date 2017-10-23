@@ -7,7 +7,11 @@ namespace ToDoList.Models
     {
         public virtual DbSet<Item> Items { get; set; }
 
-        public ToDoListContext(DbContextOptions options = null) : base(options)
+        public ToDoListContext(DbContextOptions options) : base(options)
+        {
+
+        }
+        public ToDoListContext()
         {
 
         }
