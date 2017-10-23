@@ -8,9 +8,10 @@ using ToDoList.Models;
 namespace ToDoList.Migrations
 {
     [DbContext(typeof(ToDoListContext))]
-    partial class ToDoListContextModelSnapshot : ModelSnapshot
+    [Migration("20171023184505_UsersThree")]
+    partial class UsersThree
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");
@@ -178,8 +179,6 @@ namespace ToDoList.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Color");
-
-                    b.Property<string>("Country");
 
                     b.Property<string>("Description");
 
